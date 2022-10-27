@@ -1,5 +1,13 @@
 # Swish QR Code
 
+<p>
+<a href="https://github.com/fr3h4g/swish_qr/actions?query=workflow%3ATest+event%3Apush+branch%3Amaster" target="_blank">
+    <img src="https://github.com/fr3h4g/swish-qr-python/actions/workflows/tests.yml/badge.svg" alt="Test">
+</a>
+<a href="https://pypi.org/project/fastapi" target="_blank">
+    <img src="https://img.shields.io/pypi/pyversions/swish_qr.svg" alt="Supported Python versions">
+</a>
+</p>
 Generate [Swish](https://www.swish.nu) styled QR Code as SVG or PNG image.
 
 ![Example](https://raw.githubusercontent.com/fr3h4g/swish-qr-python/main/example.png "Example")
