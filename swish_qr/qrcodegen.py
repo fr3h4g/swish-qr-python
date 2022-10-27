@@ -22,7 +22,9 @@
 #
 
 from __future__ import annotations
-import collections, itertools, re
+import collections
+import itertools
+import re
 from collections.abc import Sequence
 from typing import Callable, Dict, List, Optional, Tuple, Union
 
@@ -50,20 +52,28 @@ class QrCode:
 
     @staticmethod
     def encode_text(text: str, ecl: QrCode.Ecc) -> QrCode:
-        """Returns a QR Code representing the given Unicode text string at the given error correction level.
-        As a conservative upper bound, this function is guaranteed to succeed for strings that have 738 or fewer
-        Unicode code points (not UTF-16 code units) if the low error correction level is used. The smallest possible
-        QR Code version is automatically chosen for the output. The ECC level of the result may be higher than the
+        """Returns a QR Code representing the given Unicode text string at the given error
+        correction level.
+        As a conservative upper bound, this function is guaranteed to succeed for strings that
+        have 738 or fewer
+        Unicode code points (not UTF-16 code units) if the low error correction level is used.
+        The smallest possible
+        QR Code version is automatically chosen for the output. The ECC level of the result may
+        be higher than the
         ecl argument if it can be done without increasing the version."""
         segs: List[QrSegment] = QrSegment.make_segments(text)
         return QrCode.encode_segments(segs, ecl)
 
     @staticmethod
     def encode_binary(data: Union[bytes, Sequence[int]], ecl: QrCode.Ecc) -> QrCode:
-        """Returns a QR Code representing the given binary data at the given error correction level.
-        This function always encodes using the binary segment mode, not any text mode. The maximum number of
-        bytes allowed is 2953. The smallest possible QR Code version is automatically chosen for the output.
-        The ECC level of the result may be higher than the ecl argument if it can be done without increasing the version."""
+        """Returns a QR Code representing the given binary data at the given error correction
+        level.
+        This function always encodes using the binary segment mode, not any text mode. The maximum
+        number of
+        bytes allowed is 2953. The smallest possible QR Code version is automatically chosen for
+        the output.
+        The ECC level of the result may be higher than the ecl argument if it can be done without
+        increasing the version."""
         return QrCode.encode_segments([QrSegment.make_bytes(data)], ecl)
 
     # ---- Static factory functions (mid level) ----
@@ -108,11 +118,15 @@ class QrCode:
             ):  # All versions in the range could not fit the given data
                 msg: str = "Segment too long"
                 if datausedbits is not None:
-                    msg = f"Data length = {datausedbits} bits, Max capacity = {datacapacitybits} bits"
+                    msg = (
+                        f"Data length = {datausedbits} bits, Max capacity = {datacapacitybits} "
+                        "bits"
+                    )
                 raise DataTooLongError(msg)
         assert datausedbits is not None
 
-        # Increase the error correction level while the data still fits in the current version number
+        # Increase the error correction level while the data still fits in the current version
+        # number
         for newecl in (
             QrCode.Ecc.MEDIUM,
             QrCode.Ecc.QUARTILE,
@@ -178,7 +192,8 @@ class QrCode:
     # Immutable after constructor finishes. Accessed through get_module().
     _modules: List[List[bool]]
 
-    # Indicates function modules that are not subjected to masking. Discarded when constructor finishes.
+    # Indicates function modules that are not subjected to masking. Discarded when constructor
+    # finishes.
     _isfunction: List[List[bool]]
 
     # ---- Constructor (low level) ----
@@ -370,7 +385,8 @@ class QrCode:
     # ---- Private helper methods for constructor: Codewords and masking ----
 
     def _add_ecc_and_interleave(self, data: bytearray) -> bytes:
-        """Returns a new byte string representing the given data with the appropriate error correction
+        """Returns a new byte string representing the given data with the appropriate error
+        correction
         codewords appended to it, based on this object's version and error correction level."""
         version: int = self._version
         assert len(data) == QrCode._get_num_data_codewords(version, self._errcorlvl)
@@ -453,8 +469,10 @@ class QrCode:
                 )
 
     def _get_penalty_score(self) -> int:
-        """Calculates and returns the penalty score based on state of this QR Code's current modules.
-        This is used by the automatic mask choice algorithm to find the mask pattern that yields the lowest score."""
+        """Calculates and returns the penalty score based on state of this QR Code's current
+        modules.
+        This is used by the automatic mask choice algorithm to find the mask pattern that yields
+        the lowest score."""
         result: int = 0
         size: int = self._size
         modules: List[List[bool]] = self._modules
@@ -556,9 +574,12 @@ class QrCode:
 
     @staticmethod
     def _get_num_raw_data_modules(ver: int) -> int:
-        """Returns the number of data bits that can be stored in a QR Code of the given version number, after
-        all function modules are excluded. This includes remainder bits, so it might not be a multiple of 8.
-        The result is in the range [208, 29648]. This could be implemented as a 40-entry lookup table."""
+        """Returns the number of data bits that can be stored in a QR Code of the given version
+        number, after
+        all function modules are excluded. This includes remainder bits, so it might not be a
+        multiple of 8.
+        The result is in the range [208, 29648]. This could be implemented as a 40-entry lookup
+        table."""
         if not (QrCode.MIN_VERSION <= ver <= QrCode.MAX_VERSION):
             raise ValueError("Version number out of range")
         result: int = (16 * ver + 128) * ver + 64
@@ -573,7 +594,8 @@ class QrCode:
     @staticmethod
     def _get_num_data_codewords(ver: int, ecl: QrCode.Ecc) -> int:
         """Returns the number of 8-bit data (i.e. not error correction) codewords contained in any
-        QR Code of the given version number and error correction level, with remainder bits discarded.
+        QR Code of the given version number and error correction level, with remainder bits
+        discarded.
         This stateless pure function could be implemented as a (40*4)-cell lookup table."""
         return (
             QrCode._get_num_raw_data_modules(ver) // 8
@@ -584,14 +606,18 @@ class QrCode:
     @staticmethod
     def _reed_solomon_compute_divisor(degree: int) -> bytes:
         """Returns a Reed-Solomon ECC generator polynomial for the given degree. This could be
-        implemented as a lookup table over all possible parameter values, instead of as an algorithm."""
+        implemented as a lookup table over all possible parameter values, instead of as an
+        algorithm."""
         if not (1 <= degree <= 255):
             raise ValueError("Degree out of range")
-        # Polynomial coefficients are stored from highest to lowest power, excluding the leading term which is always 1.
-        # For example the polynomial x^3 + 255x^2 + 8x + 93 is stored as the uint8 array [255, 8, 93].
+        # Polynomial coefficients are stored from highest to lowest power, excluding the leading
+        # term which is always 1.
+        # For example the polynomial x^3 + 255x^2 + 8x + 93 is stored as the uint8 array
+        # [255, 8, 93].
         result = bytearray([0] * (degree - 1) + [1])  # Start off with the monomial x^0
 
-        # Compute the product polynomial (x - r^0) * (x - r^1) * (x - r^2) * ... * (x - r^{degree-1}),
+        # Compute the product polynomial (x - r^0) * (x - r^1) * (x - r^2) * ... *
+        # (x - r^{degree-1}),
         # and drop the highest monomial term which is always 1x^degree.
         # Note that r = 0x02, which is a generator element of this field GF(2^8/0x11D).
         root: int = 1
@@ -606,7 +632,8 @@ class QrCode:
 
     @staticmethod
     def _reed_solomon_compute_remainder(data: bytes, divisor: bytes) -> bytes:
-        """Returns the Reed-Solomon error correction codeword for the given data and divisor polynomials."""
+        """Returns the Reed-Solomon error correction codeword for the given data and divisor
+        polynomials."""
         result = bytearray([0] * len(divisor))
         for b in data:  # Polynomial division
             factor: int = b ^ result.pop(0)
@@ -617,8 +644,10 @@ class QrCode:
 
     @staticmethod
     def _reed_solomon_multiply(x: int, y: int) -> int:
-        """Returns the product of the two given field elements modulo GF(2^8/0x11D). The arguments and result
-        are unsigned 8-bit integers. This could be implemented as a lookup table of 256*256 entries of uint8."""
+        """Returns the product of the two given field elements modulo GF(2^8/0x11D). The arguments
+        and result
+        are unsigned 8-bit integers. This could be implemented as a lookup table of 256*256
+        entries of uint8."""
         if (x >> 8 != 0) or (y >> 8 != 0):
             raise ValueError("Byte out of range")
         # Russian peasant multiplication
@@ -649,7 +678,8 @@ class QrCode:
         currentrunlength: int,
         runhistory: collections.deque,
     ) -> int:
-        """Must be called at the end of a line (row or column) of modules. A helper function for _get_penalty_score()."""
+        """Must be called at the end of a line (row or column) of modules. A helper function
+        for _get_penalty_score()."""
         if currentruncolor:  # Terminate dark run
             self._finder_penalty_add_history(currentrunlength, runhistory)
             currentrunlength = 0
@@ -681,7 +711,9 @@ class QrCode:
 
     _ECC_CODEWORDS_PER_BLOCK: Sequence[Sequence[int]] = (
         # Version: (note that index 0 is for padding, and is set to an illegal value)
-        # 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40    Error correction level
+        # 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+        # 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
+        # Error correction level
         (
             -1,
             7,
@@ -858,7 +890,9 @@ class QrCode:
 
     _NUM_ERROR_CORRECTION_BLOCKS: Sequence[Sequence[int]] = (
         # Version: (note that index 0 is for padding, and is set to an illegal value)
-        # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40    Error correction level
+        # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+        # 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
+        # Error correction level
         (
             -1,
             1,
@@ -1097,7 +1131,8 @@ class QrSegment:
 
     @staticmethod
     def make_numeric(digits: str) -> QrSegment:
-        """Returns a segment representing the given string of decimal digits encoded in numeric mode."""
+        """Returns a segment representing the given string of decimal digits encoded in numeric
+        mode."""
         if not QrSegment.is_numeric(digits):
             raise ValueError("String contains non-numeric characters")
         bb = _BitBuffer()
@@ -1128,8 +1163,10 @@ class QrSegment:
 
     @staticmethod
     def make_segments(text: str) -> List[QrSegment]:
-        """Returns a new mutable list of zero or more segments to represent the given Unicode text string.
-        The result may use various segment modes and switch modes to optimize the length of the bit stream."""
+        """Returns a new mutable list of zero or more segments to represent the given Unicode
+        text string.
+        The result may use various segment modes and switch modes to optimize the length
+        of the bit stream."""
 
         # Select the most efficient segment encoding automatically
         if text == "":
@@ -1259,7 +1296,8 @@ class QrSegment:
 
         # Package-private method
         def get_mode_bits(self) -> int:
-            """Returns an unsigned 4-bit integer value (range 0 to 15) representing the mode indicator bits for this mode object."""
+            """Returns an unsigned 4-bit integer value (range 0 to 15) representing the mode
+            indicator bits for this mode object."""
             return self._modebits
 
         # Package-private method
@@ -1303,12 +1341,14 @@ def _get_bit(x: int, i: int) -> bool:
 
 
 class DataTooLongError(ValueError):
-    """Raised when the supplied data does not fit any QR Code version. Ways to handle this exception include:
+    """Raised when the supplied data does not fit any QR Code version. Ways to handle this
+    exception include:
     - Decrease the error correction level if it was greater than Ecc.LOW.
     - If the encode_segments() function was called with a maxversion argument, then increase
       it if it was less than QrCode.MAX_VERSION. (This advice does not apply to the other
       factory functions because they search all versions up to QrCode.MAX_VERSION.)
-    - Split the text data into better or optimal segments in order to reduce the number of bits required.
+    - Split the text data into better or optimal segments in order to reduce the number of
+    bits required.
     - Change the text or binary data to be shorter.
     - Change the text to fit the character set of a particular segment mode (e.g. alphanumeric).
     - Propagate the error upward to the caller/user."""
