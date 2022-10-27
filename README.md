@@ -2,7 +2,7 @@
 
 Generate [Swish](https://www.swish.nu) styled QR Code as SVG or PNG image.
 
-![Example](/example.png?raw=true "Example")
+![Example](https://raw.githubusercontent.com/fr3h4g/swish-qr-python/main/example.png "Example")
 
 ## Installation
 
