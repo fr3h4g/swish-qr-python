@@ -38,7 +38,8 @@ def generate_svg_template(viewbox, dimensions, background, circles, corners, log
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
     viewBox="{viewbox}"{dimensions}><defs>
     {logo_image()}
-    <linearGradient id="gradient" x1="0%" x2="100%" y1="100%" y2="0%" gradientUnits="userSpaceOnUse">
+    <linearGradient id="gradient" x1="0%" x2="100%" y1="100%" y2="0%"
+    gradientUnits="userSpaceOnUse">
         <stop offset="0%" stop-color="#B43092"/>
         <stop offset="100%" stop-color="#EF4123"/>
     </linearGradient>

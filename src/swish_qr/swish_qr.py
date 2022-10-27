@@ -37,7 +37,7 @@ def make_swish_svg(qr: QrCode, border: int) -> bytes:
     dot_space = 3
     image_size = size * dot_size + (size * dot_space)
 
-    BACKGROUND = ""  #'<rect width="100%" height="100%" fill="white"/>'
+    BACKGROUND = ""  # '<rect width="100%" height="100%" fill="white"/>'
     DIMENSIONS = f' width="{image_size}" height="{image_size}"'
     margin = border
     VIEWBOX = f"{4-margin} {4-margin} {(size + (margin * 2))} {(size + (margin * 2))}"
