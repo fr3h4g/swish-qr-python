@@ -4,8 +4,7 @@ from swish_qr import generate_swish_code
 svg_bytes = generate_swish_code(
     "0123456789",
     100.99,
-    # "12345678901234567890123456789012345678901234567890",
-    "1",
+    "Test message!",
     format="svg",
 )
 with open("sample.svg", "wb") as f:
@@ -15,8 +14,7 @@ with open("sample.svg", "wb") as f:
 png_bytes = generate_swish_code(
     "0123456789",
     100.99,
-    # "12345678901234567890123456789012345678901234567890",
-    "1",
+    "Test message!",
     format="png",
 )
 with open("sample.png", "wb") as f:
