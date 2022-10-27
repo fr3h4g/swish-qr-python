@@ -8,7 +8,7 @@ version = "0.2.0"
 description = "Swish QR Code Python Library"
 readme = "README.md"
 authors = [{ name = "Fredrik Haglund", email = "fr3h4g@gmail.com" }]
-license = "MIT"
+license = { text = "LICENSE" }
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
