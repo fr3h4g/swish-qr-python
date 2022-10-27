@@ -22,12 +22,12 @@
 #
 
 from __future__ import annotations
+
 import collections
 import itertools
 import re
 from collections.abc import Sequence
 from typing import Callable, Dict, List, Optional, Tuple, Union
-
 
 # ---- QR Code symbol class ----
 

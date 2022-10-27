@@ -1,9 +1,9 @@
 import io
 import re
-from PIL import Image, ImageDraw
 from typing import List
 
 import numpy
+from PIL import Image, ImageDraw
 
 from swish_qr.qrcodegen import QrCode
 from swish_qr.svg_templates import (

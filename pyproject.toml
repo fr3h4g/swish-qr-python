@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swish-qr"
+version = "0.0.1"
+description = "Swish QR Code Python Library"
+readme = "README.md"
+authors = [{ name = "Fredrik Haglund", email = "fr3h4g@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+keywords = []
+dependencies = ["pillow", "numpy"]
+requires-python = ">=3.7"
+
+[project.optional-dependencies]
+dev = ["black", "flake8", "pytest", "invoke", "pytest-cov"]
+
+[project.urls]
+Homepage = "https://github.com/fr3h4g/swish-qr-python"
