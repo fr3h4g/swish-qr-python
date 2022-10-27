@@ -4,6 +4,12 @@
 <a href="https://github.com/fr3h4g/swish-qr-python/actions?query=event%3Apush+branch%3Amain" target="_blank">
     <img src="https://github.com/fr3h4g/swish-qr-python/actions/workflows/tests.yml/badge.svg" alt="Test">
 </a>
+<a href="https://codecov.io/gh/fr3h4g/swish-qr-python" > 
+ <img src="https://codecov.io/gh/fr3h4g/swish-qr-python/branch/main/graph/badge.svg?token=8XP0FYQ0P0" alt="Codecov"/> 
+ </a>
+ <a href="https://pypi.org/project/swish_qr" target="_blank">
+    <img src="https://img.shields.io/pypi/v/swish_qr?color=%2334D058&label=pypi%20package" alt="Package version">
+</a>
 <a href="https://pypi.org/project/fastapi" target="_blank">
     <img src="https://img.shields.io/pypi/pyversions/swish_qr.svg" alt="Supported Python versions">
 </a>
