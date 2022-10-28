@@ -7,7 +7,7 @@ __pycache__/
 notused/
 *.py[cod]
 *$py.class
-
+test.png
 # C extensions
 *.so
 
