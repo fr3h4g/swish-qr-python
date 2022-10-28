@@ -16,11 +16,17 @@ def generate_swish_code(
     edit_amount=False,
     edit_payee=False,
 ) -> bytes:
-    if not format.lower() in ["svg", "png"]:
+    if (
+        not isinstance(format, str)
+        or not format
+        or format.lower() not in ["svg", "png"]
+    ):
         raise ValueError("unknown format")
-    if len(str(payee)) > 10:
+    if len(str(payee)) != 10:
         raise ValueError("payee too long, max 10 characters")
-    if len(message) > 50:
+    if not message:
+        message = ""
+    if len(str(message)) > 50:
         raise ValueError("message too long, max 50 characters")
 
     amount_str = fix_amount(amount)
