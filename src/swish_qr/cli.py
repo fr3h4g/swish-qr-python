@@ -1,4 +1,3 @@
-from pydoc import cli
 import click
 from swish_qr.swish_qr import generate_swish_code
 
@@ -28,6 +27,6 @@ def main(payee: str, amount: float, message: str, filename: str, format: str):
         image_data = generate_swish_code(payee, amount, message, format)
         with open(filename, "wb") as f:
             f.write(image_data)
-    except:
+    except:  # noqa: E722
         print("Error: Can't generate image.")
         exit(2)

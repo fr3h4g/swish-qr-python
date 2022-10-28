@@ -4,6 +4,7 @@ from PIL import Image, ImageDraw
 from swish_qr.qrcodegen import QrCode
 from swish_qr.clear_qr_data import clearCorner, clearSquare
 
+
 def generate_swish_gradient():
     scale = 3
     color_a = [180, 47, 146]
