@@ -14,7 +14,7 @@ def generate_swish_code(
     message: str,
     format: str = "png",
     edit_amount=False,
-    edit_payee=False,
+    edit_message=False,
 ) -> bytes:
     if (
         not isinstance(format, str)
@@ -34,7 +34,7 @@ def generate_swish_code(
     edit_mask = 0
     if edit_amount:
         edit_mask += 4
-    if edit_payee:
+    if edit_message:
         edit_mask += 2
 
     text = f"C{payee};{amount_str};{message};{edit_mask}"

@@ -26,6 +26,8 @@ def generate_swish_gradient():
 
 
 def make_swish_png(qr: QrCode, border: int) -> bytes:
+    if border < 0:
+        raise ValueError("Border must be non-negative")
     size = qr.get_size()
 
     dot_size = 30

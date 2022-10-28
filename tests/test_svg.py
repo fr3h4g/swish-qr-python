@@ -1,4 +1,6 @@
 from swish_qr import generate_swish_code
+from swish_qr.svg import make_swish_svg
+import pytest
 
 
 def test_svg():
@@ -10,3 +12,8 @@ def test_svg():
     )
     with open("sample.svg", "wb") as f:
         f.write(svg_bytes)
+
+
+def test_png_border():
+    with pytest.raises(ValueError):
+        make_swish_svg(None, border=-1)

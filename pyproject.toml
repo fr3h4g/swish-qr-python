@@ -33,3 +33,6 @@ Homepage = "https://github.com/fr3h4g/swish-qr-python"
 
 [project.scripts]
 swish_qr = "swish_qr.cli:main"
+
+[tool.coverage.run]
+omit = ["src/swish_qr/qrcodegen.py"]
