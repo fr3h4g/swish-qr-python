@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2022-10-28
+
 ### Added
 
 - Command line interface for generation of swish qr-code images.
@@ -15,6 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - wrong parameter name in function generate_swish_code, 'edit_payee' changed to 'edit_message'.
 
-## [0.2.3] - 2022-10-28
+## [0.2.3] - 2022-10-27
 
 - First official release
