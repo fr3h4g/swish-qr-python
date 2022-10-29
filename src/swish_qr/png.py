@@ -45,10 +45,6 @@ def generate_corner():
     return im
 
 
-if __name__ == "__main__":
-    generate_corner()
-
-
 def generate_swish_gradient():
     scale = 3
     color_a = [180, 47, 146]
