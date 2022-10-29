@@ -5,6 +5,50 @@ from swish_qr.qrcodegen import QrCode
 from swish_qr.clear_qr_data import clearCorner, clearSquare
 
 
+def generate_corner():
+    from PIL import Image, ImageDraw
+
+    # im = Image.open("swish-corner.png")
+
+    im = Image.new(
+        "RGBA",
+        (228, 228),
+    )
+    draw = ImageDraw.Draw(im)
+
+    color = (255, 255, 255)
+
+    # middle part
+    draw.arc([(65, 68), (260, 265)], start=180, end=270, fill=color, width=100)
+
+    # big arc
+    draw.arc([(0, 0), (366, 366)], start=180, end=270, fill=color, width=32)
+
+    # corner 1
+    x, y, size = 0, 197, 30
+    draw.arc([(x, y), (x + size, y + size)], start=90, end=180, fill=color, width=16)
+
+    # corner 2
+    x, y, size = 197, 197, 30
+    draw.arc([(x, y), (x + size, y + size)], start=0, end=90, fill=color, width=16)
+
+    # corner 3
+    x, y, size = 197, 0, 30
+    draw.arc([(x, y), (x + size, y + size)], start=270, end=0, fill=color, width=16)
+
+    draw.line([(16, 211), (211, 211)], fill=color, width=32)
+    draw.line([(211, 16), (211, 211)], fill=color, width=32)
+
+    draw.line([(15, 183), (15, 211)], fill=color, width=32)
+    draw.line([(183, 15), (211, 15)], fill=color, width=32)
+
+    return im
+
+
+if __name__ == "__main__":
+    generate_corner()
+
+
 def generate_swish_gradient():
     scale = 3
     color_a = [180, 47, 146]
@@ -45,13 +89,9 @@ def make_swish_png(qr: QrCode, border: int) -> bytes:
             logo_size,
         )
     )
-    corner1 = Image.open("swish-corner.png").resize((corner_size, corner_size))
-    corner2 = (
-        Image.open("swish-corner.png").rotate(90).resize((corner_size, corner_size))
-    )
-    corner3 = (
-        Image.open("swish-corner.png").rotate(270).resize((corner_size, corner_size))
-    )
+    corner1 = generate_corner().resize((corner_size, corner_size))
+    corner2 = generate_corner().rotate(90).resize((corner_size, corner_size))
+    corner3 = generate_corner().rotate(270).resize((corner_size, corner_size))
     alpha = Image.new("L", (w, h))
     draw = ImageDraw.Draw(alpha)
 
