@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Replaced image 'swish-corner.png' with corners drawn by code.
+- Updated 'swish-logo-png' with a higher resolution image.
 
 ## [0.3.0] - 2022-10-28
 
