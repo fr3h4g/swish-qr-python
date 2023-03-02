@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+## [0.3.1] - 2023-03-02
 
-- Replaced image 'swish-corner.png' with corners drawn by code.
-- Updated 'swish-logo-png' with a higher resolution image.
+- Center swish logo on png image
+- Replace image 'swish-corner.png' with corners drawn by code.
+- Update 'swish-logo-png' with a higher resolution image.
 
 ## [0.3.0] - 2022-10-28
 
