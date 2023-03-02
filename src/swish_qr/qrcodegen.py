@@ -95,7 +95,8 @@ class QrCode:
         mask, or -1 to automatically choose an appropriate mask (which may be slow).
         This function allows the user to create a custom sequence of segments that switches
         between modes (such as alphanumeric and byte) to encode text in less space.
-        This is a mid-level API; the high-level API is encode_text() and encode_binary()."""
+        This is a mid-level API; the high-level API is encode_text() and encode_binary().
+        """
 
         if not (
             QrCode.MIN_VERSION <= minversion <= maxversion <= QrCode.MAX_VERSION
@@ -164,7 +165,7 @@ class QrCode:
 
         # Pack bits into bytes in big endian
         datacodewords = bytearray([0] * (len(bb) // 8))
-        for (i, bit) in enumerate(bb):
+        for i, bit in enumerate(bb):
             datacodewords[i >> 3] |= bit << (7 - (i & 7))
 
         # Create the QR Code object
@@ -387,7 +388,8 @@ class QrCode:
     def _add_ecc_and_interleave(self, data: bytearray) -> bytes:
         """Returns a new byte string representing the given data with the appropriate error
         correction
-        codewords appended to it, based on this object's version and error correction level."""
+        codewords appended to it, based on this object's version and error correction level.
+        """
         version: int = self._version
         assert len(data) == QrCode._get_num_data_codewords(version, self._errcorlvl)
 
@@ -420,7 +422,7 @@ class QrCode:
         # Interleave (not concatenate) the bytes from every block into a single sequence
         result = bytearray()
         for i in range(len(blocks[0])):
-            for (j, blk) in enumerate(blocks):
+            for j, blk in enumerate(blocks):
                 # Skip the padding byte in short blocks
                 if (i != shortblocklen - blockecclen) or (j >= numshortblocks):
                     result.append(blk[i])
@@ -429,7 +431,8 @@ class QrCode:
 
     def _draw_codewords(self, data: bytes) -> None:
         """Draws the given sequence of 8-bit codewords (data and error correction) onto the entire
-        data area of this QR Code. Function modules need to be marked off before this is called."""
+        data area of this QR Code. Function modules need to be marked off before this is called.
+        """
         assert len(data) == QrCode._get_num_raw_data_modules(self._version) // 8
 
         i: int = 0  # Bit index into the data
@@ -556,7 +559,8 @@ class QrCode:
     def _get_alignment_pattern_positions(self) -> List[int]:
         """Returns an ascending list of positions of alignment patterns for this version number.
         Each position is in the range [0,177), and are used on both the x and y axes.
-        This could be implemented as lookup table of 40 variable-length lists of integers."""
+        This could be implemented as lookup table of 40 variable-length lists of integers.
+        """
         ver: int = self._version
         if ver == 1:
             return []
@@ -596,7 +600,8 @@ class QrCode:
         """Returns the number of 8-bit data (i.e. not error correction) codewords contained in any
         QR Code of the given version number and error correction level, with remainder bits
         discarded.
-        This stateless pure function could be implemented as a (40*4)-cell lookup table."""
+        This stateless pure function could be implemented as a (40*4)-cell lookup table.
+        """
         return (
             QrCode._get_num_raw_data_modules(ver) // 8
             - QrCode._ECC_CODEWORDS_PER_BLOCK[ecl.ordinal][ver]
@@ -638,7 +643,7 @@ class QrCode:
         for b in data:  # Polynomial division
             factor: int = b ^ result.pop(0)
             result.append(0)
-            for (i, coef) in enumerate(divisor):
+            for i, coef in enumerate(divisor):
                 result[i] ^= QrCode._reed_solomon_multiply(coef, factor)
         return result
 
@@ -1085,6 +1090,7 @@ class QrCode:
         formatbits: int  # (Package-private) In the range 0 to 3 (unsigned 2-bit integer)
 
         """The error correction level in a QR Code symbol. Immutable."""
+
         # Private constructor
         def __init__(self, i: int, fb: int) -> None:
             self.ordinal = i
@@ -1115,7 +1121,8 @@ class QrSegment:
     and call the QrSegment() constructor with appropriate values.
     This segment class imposes no length restrictions, but QR Codes have restrictions.
     Even in the most favorable conditions, a QR Code can only hold 7089 characters of data.
-    Any segment longer than this is meaningless for the purpose of generating QR Codes."""
+    Any segment longer than this is meaningless for the purpose of generating QR Codes.
+    """
 
     # ---- Static factory functions (mid level) ----
 
@@ -1303,7 +1310,8 @@ class QrSegment:
         # Package-private method
         def num_char_count_bits(self, ver: int) -> int:
             """Returns the bit width of the character count field for a segment in this mode
-            in a QR Code at the given version number. The result is in the range [0, 16]."""
+            in a QR Code at the given version number. The result is in the range [0, 16].
+            """
             return self._charcounts[(ver + 7) // 17]
 
         # Placeholders
