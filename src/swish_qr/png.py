@@ -1,8 +1,11 @@
-import numpy
 import io
+import os
+
+import numpy
 from PIL import Image, ImageDraw
-from swish_qr.qrcodegen import QrCode
+
 from swish_qr.clear_qr_data import clearCorner, clearSquare
+from swish_qr.qrcodegen import QrCode
 
 
 def generate_corner():
@@ -79,7 +82,9 @@ def make_swish_png(qr: QrCode, border: int) -> bytes:
 
     image = generate_swish_gradient().resize((w, h))
     logo_size = round(6 * (size + 8))
-    logo = Image.open("swish-logo.png").resize(
+
+    logo_image_file = os.path.join(os.path.dirname(__file__), "swish-logo.png")
+    logo = Image.open(logo_image_file).resize(
         (
             logo_size,
             logo_size,

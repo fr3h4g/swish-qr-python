@@ -1,5 +1,6 @@
-from swish_qr import generate_swish_code
 import pytest
+
+from swish_qr import generate_swish_code
 
 
 def test_format_exception():

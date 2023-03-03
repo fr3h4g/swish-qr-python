@@ -1,4 +1,5 @@
 import click
+
 from swish_qr.swish_qr import generate_swish_code
 
 

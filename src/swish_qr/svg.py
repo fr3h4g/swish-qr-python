@@ -1,12 +1,13 @@
+import re
+from typing import List
+
+from swish_qr.clear_qr_data import clearCorner, clearSquare
 from swish_qr.qrcodegen import QrCode
 from swish_qr.svg_templates import (
     generate_corners,
     generate_logo,
     generate_svg_template,
 )
-from typing import List
-import re
-from swish_qr.clear_qr_data import clearCorner, clearSquare
 
 
 def make_swish_svg(qr: QrCode, border: int) -> bytes:

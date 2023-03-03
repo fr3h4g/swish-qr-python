@@ -1,4 +1,5 @@
 import base64
+import os
 
 
 def generate_corners(size):
@@ -23,7 +24,8 @@ def generate_logo(size, margin):
 
 
 def logo_image():
-    with open("swish-logo.png", "rb") as f:
+    logo_image_file = os.path.join(os.path.dirname(__file__), "swish-logo.png")
+    with open(logo_image_file, "rb") as f:
         data = f.read()
     b64data = base64.encodebytes(data).decode("utf8")
     return (

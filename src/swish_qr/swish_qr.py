@@ -1,6 +1,6 @@
+from swish_qr.png import make_swish_png
 from swish_qr.qrcodegen import QrCode
 from swish_qr.svg import make_swish_svg
-from swish_qr.png import make_swish_png
 
 
 def fix_amount(amount):

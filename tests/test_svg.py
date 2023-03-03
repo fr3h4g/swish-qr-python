@@ -1,6 +1,7 @@
+import pytest
+
 from swish_qr import generate_swish_code
 from swish_qr.svg import make_swish_svg
-import pytest
 
 
 def test_svg():
