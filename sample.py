@@ -12,9 +12,9 @@ from swish_qr import generate_swish_code
 
 # save to png
 png_bytes = generate_swish_code(
-    "0123456789",
-    1,
-    "",
+    "1232938231",
+    150,
+    "Pren&3jul-23002687",
     format="png",
 )
 with open("sample1.png", "wb") as f:

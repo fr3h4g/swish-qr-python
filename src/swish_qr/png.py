@@ -124,6 +124,7 @@ def make_swish_png(qr: QrCode, border: int) -> bytes:
     # logo_pos = (center + 0.5) * dot_size + ((center + 0.5) * dot_space)
     logo_pos = (image_size / 2) - (logo.width / 2)
     Image.Image.paste(image, logo, (round(logo_pos), round(logo_pos)))
+    image = image.resize((472, 472), Image.BOX)
 
     with io.BytesIO() as output:
         image.save(output, format="png")
