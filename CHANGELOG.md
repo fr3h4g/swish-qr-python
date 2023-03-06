@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2023-03-03
+
+- Change to ECC HIGH
+
 ## [0.3.4] - 2023-03-03
 
 - New release, with included logo

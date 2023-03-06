@@ -40,7 +40,7 @@ def generate_swish_code(
     text = f"C{payee};{amount_str};{message};{edit_mask}"
     qr_code = QrCode.encode_text(
         text,
-        QrCode.Ecc.MEDIUM,
+        QrCode.Ecc.HIGH,
     )
 
     if format.lower() == "svg":
