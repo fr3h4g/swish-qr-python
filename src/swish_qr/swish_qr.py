@@ -5,6 +5,8 @@ from swish_qr.svg import make_swish_svg
 
 def fix_amount(amount):
     amount_str = "{:.2f}".format(amount).replace(".", ",")
+    if amount == 0.0:
+        amount_str = ""
     return amount_str
 
 
@@ -33,9 +35,9 @@ def generate_swish_code(
 
     edit_mask = 0
     if edit_amount:
-        edit_mask += 4
-    if edit_message:
         edit_mask += 2
+    if edit_message:
+        edit_mask += 4
 
     text = f"C{payee};{amount_str};{message};{edit_mask}"
     qr_code = QrCode.encode_text(
